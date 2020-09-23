@@ -1,0 +1,17 @@
+.btn_logout{
+    text-align: center;
+}
+.btn_logout .logout{
+    padding: 9px 47px;
+    font-size: 12px;
+    width: 50%;
+    color: #fff;
+    background: none;
+    border: 1px solid #fab005;
+}
+.btn_logout .logout:hover {
+    color: #fff;
+    background: #E60023;
+    border: 2px solid #E60023;
+    outline: none !important;
+}
