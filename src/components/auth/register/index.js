@@ -8,6 +8,7 @@ class Register extends Component {
   state = {
     email: "",
     password: "",
+    cart:null
   };
 
   handleChange = (e) => {
@@ -23,13 +24,17 @@ class Register extends Component {
   };
 
   render() {
-    const { uid,email } = this.props;
+    const { uid,email,cart } = this.props;
     if (uid) {
       const dbRefrence = firebase.firestore();
       dbRefrence
           .collection("Users")
           .doc(uid).set(
-          { email: email },
+          { email: email,
+            cart : {cart:0,
+              cartPrice:0,
+            products:{}},
+          name:"User" },
           { merge: true })
       return <Redirect to="/" />;}
     return (

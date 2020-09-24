@@ -58,7 +58,7 @@ class Header extends Component {
             }
         });
         this.setState({
-            name: details["name"].split(' ')[0]
+            name: details["name"] ? details["name"].split(' ')[0] : "User"
         })
     }
     });
