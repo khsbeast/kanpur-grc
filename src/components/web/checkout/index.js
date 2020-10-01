@@ -30,6 +30,7 @@ class Checkout extends Component {
     };
 
     getdata() {
+        console.log(this.state.cartProps)
         let details = {},
             cart = [],
             orders = [];
@@ -88,10 +89,6 @@ class Checkout extends Component {
 
         /* Cause your component to request data from Firebase when
            component first mounted */
-        dbRefrence.collection("Users").get().then(async snapshot => {
-            const snapp = snapshot
-            console.log(snapp)
-        })
         this.getdata()
     }
     handleChange = (e) => {

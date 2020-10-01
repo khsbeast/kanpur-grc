@@ -32,8 +32,8 @@ firebase.auth().onAuthStateChanged(async (user) => {
                 initialState["cartPrice"] = 0
               }
         }
-      })
 
+      })
 export default (state = initialState, action) => {
     let productSelected = "";
       const dbref = firebase.firestore();

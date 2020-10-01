@@ -26,7 +26,8 @@ export default class Main extends Component {
             <Header />
             <Switch>
               <Route exact path='/' component={Home} />
-              <Route path='/kitchen' component={Kitchen} />
+              {/* <Route path='/kitchen' component={Kitchen} /> */}
+              <Route path='/kitchen/:iq' component={Kitchen} />
               <Route path="/product-details" component={Singleproduct} />
               <Route path='/care' component={Care} />
               <Route path='/house-hold' component={Household} />

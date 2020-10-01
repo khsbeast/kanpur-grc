@@ -8,7 +8,7 @@ export default class Footer extends Component {
                 <div className="container">
                     <div className="col-md-3 footer-grid">
                         <h3>About Us</h3>
-                        <p>This is <Link to="http://abhinashkumar.com/"> Abhinash kumar</Link>. I am full stack developer . I am working on Nodejs,sequelize(ORM),Express, mongoDB,& Reactjs since 2years .so, if you want make any kind of website/software please freely contact with us.</p>
+                        <p>This is <Link to="http://abhinashkumar.com/"> Kumar Harsh</Link>. I am full stack developer . I am working on Nodejs,sequelize(ORM),Express, mongoDB,& Reactjs since 2years .so, if you want make any kind of website/software please freely contact with us.</p>
                     </div>
                     <div className="col-md-3 footer-grid ">
                         <h3>Menu</h3>
@@ -39,8 +39,8 @@ export default class Footer extends Component {
                     </div>
                     <div className="clearfix" />
                     <div className="footer-bottom">
-                        <h2><Link to="/"><b>T<br />H<br />E</b>Big Store<span>The Best Supermarket</span></Link></h2>
-                        <p className="fo-para">This is <Link to="http://abhinashkumar.com/"> Abhinash kumar</Link>. I am full stack developer . I am working on Nodejs,sequelize(ORM),Express, mongoDB,& Reactjs since 2years .so, if you want make any kind of website/software please freely contact with us.</p>
+                        <h2><Link to="/"><b>T<br />H<br />E</b>Kanpur Groceries<span>Smart Buyer ,Smart Choice</span></Link></h2>
+                        <p className="fo-para">This is <Link to="http://abhinashkumar.com/"> Kumar Harsh</Link>. I am full stack developer . I am working on Nodejs,sequelize(ORM),Express, mongoDB,& Reactjs since 2years .so, if you want make any kind of website/software please freely contact with us.</p>
                         <ul className="social-fo">
                             <li><Link to="#" className=" face"><i className="fa fa-facebook" aria-hidden="true" /></Link></li>
                             <li><Link to="#" className=" twi"><i className="fa fa-twitter" aria-hidden="true" /></Link></li>
@@ -61,7 +61,7 @@ export default class Footer extends Component {
                         </div>
                     </div>
                     <div className="copy-right">
-                        <p> © 2020 Big store. All Rights Reserved | Design by  <Link to="http://abhinashkumar.com/"> Abhinash kumar</Link></p>
+                        <p> © 2020 Big store. All Rights Reserved | Design by  <Link to="http://abhinashkumar.com/"> Kumar Harsh</Link></p>
                     </div>
                 </div>
             </div>

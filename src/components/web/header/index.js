@@ -17,6 +17,7 @@ var nametook = ""
 class Header extends Component {
 
     state = {
+      search:"1",
       width: window.innerWidth,
       name:"default"
     }
@@ -39,6 +40,9 @@ class Header extends Component {
     firebase.auth().signOut();
     return <Redirect to="/"/>
   }
+  onSearch=(e)=> {
+    this.setState({search:e.target.value})
+  }
 
   getdata() {
     let details = {},
@@ -53,11 +57,9 @@ class Header extends Component {
         const DocumentOfUser = data.data();
         Object.keys(DocumentOfUser).forEach((userDocumentKey) => {
             const eachkeyInDocumentValues = DocumentOfUser[userDocumentKey];
-            if (typeof eachkeyInDocumentValues != "object") {
                 details[`${userDocumentKey}`] = eachkeyInDocumentValues;
-            }
         });
-        this.setState({
+        this.setState({ 
             name: details["name"] ? details["name"].split(' ')[0] : "User"
         })
     }
@@ -65,6 +67,7 @@ class Header extends Component {
 }
 
   render() {
+    
     if (this.props.user) {
       var Login = <Grid item md={3} lg={3} xl={4}>
         <Grid container className="bk_cart_sd">
@@ -151,7 +154,7 @@ class Header extends Component {
                         <b>
                           T<br />H<br />E
                         </b>
-                        Big Store<span>The Best Supermarket</span>
+                        1KG<span>Smart Buyer's Choice</span>
                       </Link>
                     </h1>
                   </div>
@@ -162,6 +165,7 @@ class Header extends Component {
                       <input
                         type="text"
                         name="search"
+                        onChange={this.onSearch}
                         placeholder="Search for Products..."
                       />
                       <button className="btn search__btn">
@@ -215,31 +219,30 @@ class Header extends Component {
                             <div className="col-sm-3">
                               <ul className="multi-column-dropdown">
                                 <li>
-                                  <Link to="/kitchen">
+                                  <Link to="/kitchen/a1">
                                     <i
                                       className="fa fa-angle-right"
                                       aria-hidden="true"
                                     />
-                                    Water &amp; Beverages
+                                    a1
                                   </Link>
                                 </li>
                                 <li>
-                                  <Link to="/kitchen">
+                                  <Link to="/kitchen/a2">
                                     <i
                                       className="fa fa-angle-right"
                                       aria-hidden="true"
                                     />
-                                    Fruits &amp; Vegetables
+                                   a2
                                   </Link>
-                                </li>
+                                </li>"
                                 <li>
-                                  <Link to="/kitchen">
-                                    {" "}
+                                  <Link to="/kitchen/a3">
                                     <i
                                       className="fa fa-angle-right"
                                       aria-hidden="true"
                                     />
-                                    Staples
+                                    a3
                                   </Link>
                                 </li>
                                 <li>

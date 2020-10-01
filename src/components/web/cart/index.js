@@ -9,8 +9,6 @@ function Cart({ cartProps, productQuantity, clearProduct }) {
     let productsInCart =[]
 
   // Similar to componentDidMount and componentDidUpdate:
-
-
     if(cartProps.products){
     Object.keys(cartProps.products).forEach(function (item) {
         if (cartProps.products[item].inCart) {
@@ -18,7 +16,7 @@ function Cart({ cartProps, productQuantity, clearProduct }) {
         }
     })
     console.log("ye bta",productsInCart)}
- 
+
     return (
         <div>
             <Grid container className="shopping_cart">
