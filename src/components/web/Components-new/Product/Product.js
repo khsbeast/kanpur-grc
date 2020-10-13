@@ -26,8 +26,13 @@ const Product = (props) => {
                     </div>
                     <div className="clearfix" />
                 </div>
+                <div className="quantity-select">
+                <div className="entry value-minus">&nbsp;</div>
+                <div className="entry value"><span className="span-1">{1}</span></div>
+                <div className="entry value-plus active" >&nbsp;</div>
+                 </div>
                 <div className="add">
-                    <button className="btn btn-danger btn-outline-danger my-cart-btn my-cart-b" onClick={() => props.addToCart(props.id)}>Add to Cart</button>
+                    <button className="btn btn-danger btn-outline-danger my-cart-btn my-cart-b buttn" onClick={() => props.addToCart(props.id)}>Add to Cart</button>
                 </div>
             </div>
         </div>

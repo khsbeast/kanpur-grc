@@ -16,6 +16,8 @@ import store from "./store";
 
 const rrfProps = {
   firebase,
+  userProfile:"Users",
+  useFirestoreForProfile: true,
   config: {},
   dispatch: store.dispatch,
   createFirestoreInstance,

@@ -34,7 +34,8 @@ class Register extends Component {
             cart : {cart:0,
               cartPrice:0,
             products:{}},
-          name:"User" },
+          name:"User",
+          uid : uid },
           { merge: true })
       return <Redirect to="/" />;}
     return (

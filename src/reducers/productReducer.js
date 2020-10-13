@@ -1,4 +1,23 @@
 import { ADD_TO_CART, GET_NUMBERS_BASKET, INCREASE_QUANTITY, DECREASE_QUANTITY, CLEAR_PRODUCT } from '../types';
+
+export default (state = {}, action) => {
+    switch (action.type) {
+        case ADD_TO_CART:
+            return state;
+        case GET_NUMBERS_BASKET:
+            return state;
+        case INCREASE_QUANTITY:
+            return state;
+        case DECREASE_QUANTITY:
+            return state;
+        case CLEAR_PRODUCT:
+            return state;
+        default:
+            return state;
+    }
+}
+/*
+import { ADD_TO_CART, GET_NUMBERS_BASKET, INCREASE_QUANTITY, DECREASE_QUANTITY, CLEAR_PRODUCT } from '../types';
 import firebase from '../fire'
 
 let initialState = {}
@@ -25,11 +44,13 @@ firebase.auth().onAuthStateChanged(async (user) => {
               initialState["products"] = data.data()["cart"]["products"] 
               initialState["cart"] = data.data()["cart"]["cart"]
               initialState["cartPrice"] = data.data()["cart"]["cartPrice"]
+              initialState["name"] = data.data()["name"]
               console.log(data.data()["cart"]["products"] )
               }else{
                 initialState["products"] = products
                 initialState["cart"] = 0
                 initialState["cartPrice"] = 0
+                initialState["name"] = data.data()["name"]
               }
         }
 
@@ -123,7 +144,7 @@ export default (state = initialState, action) => {
             return state;
     }
 
-}
+}*/
 
 // import {
 //   ADD_TO_CART,

@@ -3,22 +3,30 @@ import { Grid, Card } from '@material-ui/core/';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { productQuantity, clearProduct } from '../../../actions/productQuantity'
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 import './cart.css';
-function Cart({ cartProps, productQuantity, clearProduct }) {
+function Cart({ data,cartProps, productQuantity, clearProduct }) {
+
 
     let productsInCart =[]
 
   // Similar to componentDidMount and componentDidUpdate:
-    if(cartProps.products){
-    Object.keys(cartProps.products).forEach(function (item) {
-        if (cartProps.products[item].inCart) {
-            productsInCart.push(cartProps.products[item])
+  if(data){
+    console.log("data",data)
+    if(data[0]["cart"]["products"]){
+    Object.keys(data[0]["cart"]["products"]).forEach(function (item) {
+        console.log(data[0].cart.products[item])
+        if (data[0].cart.products[item].inCart) {
+            productsInCart.push(data[0]["cart"].products[item])
         }
-    })
-    console.log("ye bta",productsInCart)}
-
+    })}
+    console.log(productsInCart)
+}
+     
     return (
         <div>
+            {console.log("Ha bhai")}
             <Grid container className="shopping_cart">
                 <Grid item md={2} lg={2} xl={2}></Grid>
                 <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
@@ -74,8 +82,8 @@ function Cart({ cartProps, productQuantity, clearProduct }) {
                                 <span className="title">Price details</span>
                                 <div class="_2twTWD">
                                     <div class="hJYgKM">
-                                        <div class="_10vVqD">Price ({cartProps.cart} item)</div>
-                                        <span> ₹{cartProps.cartPrice}</span>
+                                        <div class="_10vVqD">Price ({data? data[0]["cart"].cart:0} item)</div>
+                                        <span> ₹{data? data[0]["cart"].cartPrice:0}</span>
                                     </div>
                                     <div class="hJYgKM">
                                         <div class="_10vVqD">Delivery Fee</div>
@@ -86,7 +94,7 @@ function Cart({ cartProps, productQuantity, clearProduct }) {
                                             <div class="_10vVqD">Total Amount</div>
                                             <span>
                                                 <div class="tnAu1u">
-                                                    <span > ₹{cartProps.cartPrice}</span>
+                                                    <span > ₹{data? data[0]["cart"].cartPrice:0}</span>
                                                 </div>
                                             </span>
                                         </div>
@@ -109,10 +117,19 @@ function Cart({ cartProps, productQuantity, clearProduct }) {
 }
 const mapStateToProps = (state) => ({
     cartProps: state.cartState,
+    uid:state.firebase.auth.uid,
+    data:state.firestore.ordered.Users,
 });
 
-export default connect(mapStateToProps, { productQuantity, clearProduct })(Cart);
-
+export default compose(
+    connect(mapStateToProps, { productQuantity, clearProduct }),
+    firestoreConnect((ownProps) => [
+      {
+        collection: "Users",
+        doc:ownProps.uid
+      },
+    ])
+  )(Cart);
 
 
 

@@ -7,7 +7,12 @@ import { getCartNumbers } from "../../../actions/productActions";
 import firebase from '../../../fire'
 import { IconContext } from 'react-icons'
 import { FaRegUserCircle } from "react-icons/fa";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
+import "./dropdown.css"
+
+
 
 
 import './logout.css'
@@ -16,11 +21,9 @@ var nametook = ""
 
 class Header extends Component {
 
-    state = {
-      search:"1",
-      width: window.innerWidth,
-      name:"default"
-    }
+  state = {
+    width: window.innerWidth,
+  }
 
   componentWillMount() {
     window.addEventListener("resize", this.handleWindowSizeChange);
@@ -28,47 +31,25 @@ class Header extends Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowSizeChange);
   }
-  componentDidMount() {
-    this.getdata()
-  }
 
   handleWindowSizeChange = () => {
     this.setState({ width: window.innerWidth });
   };
-  
+
   Logout = () => {
     firebase.auth().signOut();
-    return <Redirect to="/"/>
+    return <Redirect to="/" />
   }
-  onSearch=(e)=> {
-    this.setState({search:e.target.value})
+  onSearch = (e) => {
+    this.setState({ search: e.target.value })
   }
-
-  getdata() {
-    let details = {},
-        cart = [],
-        orders = [];
-    firebase.auth().onAuthStateChanged(async user => {
-        if(user){
-        // console.log("User wala", user)
-        const db = firebase.firestore();
-        const data = await db.collection('Users').doc(this.props.user
-        ).get();
-        const DocumentOfUser = data.data();
-        Object.keys(DocumentOfUser).forEach((userDocumentKey) => {
-            const eachkeyInDocumentValues = DocumentOfUser[userDocumentKey];
-                details[`${userDocumentKey}`] = eachkeyInDocumentValues;
-        });
-        this.setState({ 
-            name: details["name"] ? details["name"].split(' ')[0] : "User"
-        })
-    }
-    });
-}
 
   render() {
-    
+    console.log(this.props)
+    if(this.props.data)
     if (this.props.user) {
+      console.log("Yeah i updated when props changed")
+      console.log(JSON.stringify(this.props.username))
       var Login = <Grid item md={3} lg={3} xl={4}>
         <Grid container className="bk_cart_sd">
           <Grid item md={4} lg={4} xl={4}>
@@ -77,7 +58,7 @@ class Header extends Component {
                 <FaRegUserCircle />
               </IconContext.Provider>
               {console.log(nametook)}
-              <h4 style={{ color: "white", paddingLeft: "7px", paddingTop: "6px" }}>Welcome, {this.state.name}</h4>
+              <h4 style={{ color: "white", paddingLeft: "7px", paddingTop: "6px" }}>Welcome, {this.props.data[0].name}</h4>
             </div>
           </Grid>
           <Grid item md={4} lg={4} xl={4} className="btn_logout">
@@ -91,7 +72,7 @@ class Header extends Component {
             <Link to="/carts">
               <Button className="cart_item" variant="outlined">
                 <span className="item_count">
-                  {this.props.cartProps.cart}
+                  {this.props.data[0].cart.cart}
                 </span>
                 <i
                   className="fa fa-shopping-cart my-cart-icon"
@@ -972,9 +953,20 @@ class Header extends Component {
     }
   }
 }
-const mapStateToProps = (state) => ({
-  cartProps: state.cartState,
-  user: state.firebase.auth.uid,
-});
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    cartProps: state.cartState,
+    user: state.firebase.auth.uid ? state.firebase.auth.uid : "",
+    data: state.firestore.ordered.Users,
 
-export default connect(mapStateToProps, { getCartNumbers })(Header);
+  }
+};
+
+export default compose(connect(mapStateToProps, { getCartNumbers }),
+  firestoreConnect((ownProps) => [
+    {
+      collection: "Users",
+      doc:ownProps.user
+    }
+  ]))(Header);

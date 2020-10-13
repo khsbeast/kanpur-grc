@@ -4,50 +4,31 @@ import Product from '../Components-new/Product/Product';
 import { connect } from 'react-redux';
 import { productQuantity, clearProduct } from '../../../actions/productQuantity'
 import firebase from "../../../fire"
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 var cateogryproducts = [];
 let  route = null
 var allProducts={}
 class kitchen extends Component{
     state = {
             user: true,
-            products:{},
             loaded:false
           };
-          componentDidMount(){
-              this.authListener()
-          }
-        authListener = async ()=>{
-            firebase.auth().onAuthStateChanged(async (user) => {
-                console.log("user ",user);
-                const db = firebase.firestore();
-                await db.collection("Products").doc("bdY066ZAObTGOaWl2pWC05IRg382"
-                    ).get().then((data)=>{
-                        allProducts = data.data();
-                        console.log("f",allProducts)
-                        console.log('ye',this.state.products)
-                    this.setState({products : allProducts});
-                }
-                    )
-
-            });
-        } 
-        shouldComponentUpdate(newprops,newstate){
-            if(this.props !== newprops || this.state !== newstate)
-            return true
-        }
     
     render(){
         console.log(this.state.products,this.props)
         /*if(!cateogryproducts.length)
             this.authListener()*/
-            cateogryproducts = Object.keys(this.state.products).map((pro)=>{
-                if(this.state.products[pro]["category"] === this.props["match"]["params"]["iq"])
+            if(this.props.data.Products)
+            cateogryproducts = Object.keys(this.props.data.Products[0]).map((pro)=>{
+                if(this.props.data.Products[0][pro]["category"] === this.props["match"]["params"]["iq"])
                     return <Product title ="ok"  image="/images/co1.jpg" />  
     
         })
         return (
             
             <div>
+                {console.log(this.props.data.Products)}
             {/* Carousel
 ================================================== */}
             <div id="myCarousel" className="carousel slide kic-top" data-ride="carousel">
@@ -94,6 +75,21 @@ class kitchen extends Component{
     }
     
 }
-
-export default kitchen;
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+      cartProps: state.cartState,
+      user: state.firebase.auth.uid ? state.firebase.auth.uid : "",
+      data: state.firestore.ordered,
+    }
+  };
+  
+  export default compose(connect(mapStateToProps),
+    firestoreConnect((ownProps) => [
+      {
+        collection: "Products",
+        doc:"bdY066ZAObTGOaWl2pWC05IRg382"
+      }
+    ]))(kitchen);
+  
 

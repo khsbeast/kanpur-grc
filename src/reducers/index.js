@@ -7,6 +7,6 @@ import { firestoreReducer } from "redux-firestore"; /**updating firestore */
 export default combineReducers({
   cartState: productReducer,
   firebase: firebaseReducer,
-  firesstore: firestoreReducer,
+  firestore: firestoreReducer,
   auth: authReducer,
 });

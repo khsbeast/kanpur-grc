@@ -15,3 +15,7 @@
     border: 2px solid #E60023;
     outline: none !important;
 }
+.navbar-default .navbar-nav > li > a {
+    color: #000;
+    font-size: 15px;
+}

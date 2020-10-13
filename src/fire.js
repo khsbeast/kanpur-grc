@@ -13,6 +13,7 @@ var firebaseConfig = {
     measurementId: "G-P7N1N1402C"
 };
 firebase.initializeApp(firebaseConfig);
+firebase.firestore(); 
 
 export default firebase;
 
