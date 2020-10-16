@@ -5,7 +5,9 @@ import Summarycart from './summarycart';
 import { connect } from 'react-redux';
 import { productQuantity, clearProduct } from '../../../actions/productQuantity'
 import firebase from '../../../fire'
-import store from '../../../store'
+import store from '../../../store' 
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core/';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Loader from '../../web/loader/loader'
@@ -16,81 +18,7 @@ const dbRefrence = firebase.firestore()
 
 class Checkout extends Component {
 
-    state = {
-        name: "",
-        number: "",
-        pincode: "",
-        address: "",
-        addressfound: false,
-        city: "",
-        state: "",
-        cart: [],
-        orders: [],
-        dataloaded: false
-    };
-
-    getdata() {
-        console.log(this.state.cartProps)
-        let details = {},
-            cart = [],
-            orders = [];
-        /* Remove arrow function */
-        firebase.auth().onAuthStateChanged(async user => {
-            if(user){
-            //console.log("User wala", user)
-            const db = firebase.firestore();
-            const data = await db.collection('Users').doc(user.uid
-            ).get();
-            const DocumentOfUser = data.data();
-            Object.keys(DocumentOfUser).forEach((userDocumentKey) => {
-                const eachkeyInDocumentValues = DocumentOfUser[userDocumentKey];
-                if (typeof eachkeyInDocumentValues == "object") {
-                    //basically here DocumentOfUser[userDocumentKey] = [{ame:ada},{nama,ad}]
-                    for (
-                        let arrayIndex = 0;
-                        arrayIndex < eachkeyInDocumentValues.length;
-                        arrayIndex++
-                    ) {
-                        let tempObject = {};
-                        const Item = eachkeyInDocumentValues[arrayIndex]; //object { name: banana}
-                        Object.keys(Item).forEach((key) => {
-                            tempObject[`${key}`] = Item[key];
-                        });
-                        if (eachkeyInDocumentValues[0]["cart"]) cart.push(tempObject);
-                        else if (eachkeyInDocumentValues[0]["orders"]) orders.push(tempObject);
-                    }
-                }
-
-                else {
-                    details[`${userDocumentKey}`] = eachkeyInDocumentValues;
-                }
-            });
-
-            details["cart"] = cart;
-            details["orders"] = orders;
-            console.log(details);
-            console.log(details["name"]);
-            this.setState({
-                name: details["name"],
-                number: details["number"],
-                pincode: details["pincode"],
-                address: details["address"],
-                addressfound: details["addressfound"],
-                city: details["city"],
-                state: details["state"],
-                cart: details["cart"],
-                orders: details["orders"],
-                dataloaded: true
-            })
-        }
-        });
-    }
-    componentDidMount() {
-
-        /* Cause your component to request data from Firebase when
-           component first mounted */
-        this.getdata()
-    }
+    
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value,
@@ -117,9 +45,34 @@ class Checkout extends Component {
     }
 
     render() {
+        console.log(this.props)
         const summary = <Summarycart title="Moong" price="10" qty="2"/>
-        if (this.state.dataloaded) {
-               var DeliveryForm = <Paper >
+        if (this.props.data && this.props.uid)
+         {
+             const Data = this.props.data[0];
+             if(Data.addressfound)
+             {
+                var DeliveryForm = <Paper >
+                <h3 className="_1fM65H _2RMAtd"><span className="_1Tmvyj">2</span><span className="_1_m52b">Delivery Address</span></h3>
+                <Grid container spacing={4} className="address_bk_checkout ">
+                    <div>
+                    <p>Delivery Address : </p>
+                    <br></br>
+             <p><span style={{fontWeight:"bold",marginRight:"15px"}}>{Data.name}</span><span style={{fontWeight:"bold"}}>{Data.number}</span></p>
+             <p>{Data.address}</p>
+                    </div>
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                    <div class="_1qbqu2 uK6xOa">
+                                <button class="_2AkmmA EqjTfe _7UHT_c" type="button" onClick={this.handleSubmit}>Deliver Here</button>
+                                <button class="_2AkmmA _237M5J" type="button" >Cancel</button>
+                            </div>
+                        </Grid>
+                    </Grid>
+                </Paper>
+
+             }
+             else{
+               var DeliveryForm = <Paper>
                     <h3 className="_1fM65H _2RMAtd"><span className="_1Tmvyj">2</span><span className="_1_m52b">Delivery Address</span></h3>
                     <Grid container spacing={4} className="address_bk_checkout ">
                         <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
@@ -168,7 +121,7 @@ class Checkout extends Component {
                         </Grid>
                     </Grid>
                 </Paper>
-            console.log(this.state.addressfound)
+             }
             return (
                 <div>
                     <header className="header1 header1--white-mode">
@@ -356,11 +309,19 @@ class Checkout extends Component {
 
 }
 const mapStateToProps = (state) => {
-    const uid = state.firebase.auth.id
     return {
-        uid: uid,
-        cartProps: state.cartState
+        uid: state.firebase.auth.uid,
+        cartProps: state.cartState,
+        data: state.firestore.ordered.Users
     };
 };
 
-export default connect(mapStateToProps, { productQuantity, clearProduct })(Checkout);
+export default compose(
+    connect(mapStateToProps, { productQuantity, clearProduct }),
+    firestoreConnect((ownProps) => [
+      {
+        collection: "Users",
+        doc:ownProps.uid
+      },
+    ])
+  )(Checkout);
