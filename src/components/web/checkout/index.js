@@ -11,6 +11,8 @@ import { firestoreConnect } from "react-redux-firebase";
 import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core/';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Loader from '../../web/loader/loader'
+import { FaRegEdit } from 'react-icons/fa';
+import './check.css'
 
 const dbRefrence = firebase.firestore()
 
@@ -18,17 +20,22 @@ const dbRefrence = firebase.firestore()
 
 class Checkout extends Component {
 
-    
+    state = {
+        edit:false
+    }
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value,
         });
     };
-
+    handleEdit = () => {
+        this.setState({edit:true})
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         // alert(store.getState().firebase.auth.uid);
-        const upload = dbRefrence
+        this.setState({edit:false})
+        /*const upload = dbRefrence
             .collection("Users")
             .doc(store.getState().firebase.auth.uid);
         upload.set(
@@ -41,7 +48,7 @@ class Checkout extends Component {
                 state: this.state.state,
                 addressfound: true,
             },
-            { merge: true });
+            { merge: true });*/
     }
 
     render() {
@@ -59,11 +66,12 @@ class Checkout extends Component {
                     <p>Delivery Address : </p>
                     <br></br>
              <p><span style={{fontWeight:"bold",marginRight:"15px"}}>{Data.name}</span><span style={{fontWeight:"bold"}}>{Data.number}</span></p>
-             <p>{Data.address}</p>
+             <p>{Data.address},</p>
+             <p>{Data.city},{Data.state}-<span style={{fontWeight:"bold"}}>{Data.pincode}</span></p>
                     </div>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                     <div class="_1qbqu2 uK6xOa">
-                                <button class="_2AkmmA EqjTfe _7UHT_c" type="button" onClick={this.handleSubmit}>Deliver Here</button>
+                                <button class="_2AkmmA EqjTfe _7UHT_c" type="button" onClick={this.handleEdit}><FaRegEdit style={{paddingTop:"3px",paddingRight:"1px"}} />Edit</button>
                                 <button class="_2AkmmA _237M5J" type="button" >Cancel</button>
                             </div>
                         </Grid>
@@ -76,7 +84,7 @@ class Checkout extends Component {
                     <h3 className="_1fM65H _2RMAtd"><span className="_1Tmvyj">2</span><span className="_1_m52b">Delivery Address</span></h3>
                     <Grid container spacing={4} className="address_bk_checkout ">
                         <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
-                            <input type="text" className="login-phone__input input" id="name" placeholder="Name" onChange={this.handleChange} />
+                            <input type="text" className="login-phone__input input" id="name" placeholder="Name" onChange={this.handleChange}/>
                         </Grid>
                         <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
                             <input type="Number" className="address_field_bk__input input" id="number" placeholder="Number" onChange={this.handleChange} />
@@ -122,6 +130,56 @@ class Checkout extends Component {
                     </Grid>
                 </Paper>
              }
+             if(this.state.edit){
+                var DeliveryForm = <Paper>
+                <h3 className="_1fM65H _2RMAtd"><span className="_1Tmvyj">2</span><span className="_1_m52b">Delivery Address</span></h3>
+                <Grid container spacing={4} className="address_bk_checkout ">
+                    <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
+                        <input type="text" className="login-phone__input input" id="name" placeholder="Name" onChange={this.handleChange} defaultValue={Data.name}/>
+                    </Grid>
+                    <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
+                        <input type="text" className="address_field_bk__input input" id="number" placeholder="Number" onChange={this.handleChange} defaultValue={Data.number}/>
+                    </Grid>
+                    <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
+                        <input type="Number" className="address_field_bk__input input" id="pincode" placeholder="Pincode" onChange={this.handleChange} defaultValue={Data.pincode}/>
+                    </Grid>
+                    {/*<Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
+            <input type="Number" className="address_field_bk__input input" data-test-id="phone-no-text-box" placeholder="Locality" />
+        </Grid> */}
+                    <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
+                        <input type="text" className="address_field_bk__input input" id="city" onChange={this.handleChange} placeholder="City/District/Town" defaultValue={Data.city}/>
+                    </Grid>
+                    <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={12} lg={12}>
+                        <textarea className="address_field_bk__input input" id="address" onChange={this.handleChange} placeholder="Address(Area and Street)" defaultValue={Data.address}/>
+                    </Grid>
+                    <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
+                        <input type="text" className="login-phone__input input" id="state" onChange={this.handleChange} placeholder="state" defaultValue={Data.state}/>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                        {/* <div className="_3XXwRR">
+                <p className="_2dwzAy">Address Type</p>
+                <div className="_3qg3HS">
+                    <div>
+                        <label htmlFor="HOME" className="_8J-bZE _2tcMoY">
+                            <input type="radio" className="_2haq-9" name="locationTypeTag" readOnly id="HOME" defaultValue="on" />
+                            <div className="_6ATDKp" />
+                            <div className="_2o59RR"><span>Home (All day delivery)</span></div></label>
+                        <label htmlFor="WORK" className="_8J-bZE _2tcMoY">
+                            <input type="radio" className="_2haq-9" name="locationTypeTag" readOnly id="WORK" defaultValue="on" />
+                            <div className="_6ATDKp" />
+                            <div className="_2o59RR"><span>Work (Delivery between 10 AM - 5 PM)</span></div>
+                        </label>
+                    </div>
+                </div>
+            </div> */}
+
+                        <div class="_1qbqu2 uK6xOa">
+                            <button class="_2AkmmA EqjTfe _7UHT_c" type="button" onClick={this.handleSubmit}>Submit</button>
+                        </div>
+                    </Grid>
+                </Grid>
+            </Paper>
+             }
             return (
                 <div>
                     <header className="header1 header1--white-mode">
@@ -131,7 +189,7 @@ class Checkout extends Component {
                             <div className="checkout-promise-item checkout-promise-item--secure-payments">Secure Payments</div>
                         </div>
                     </header>
-                    <Grid container style={{ marginTop: "70px" }}>
+                    <Grid container style={{ marginTop: "90px" }}>
                         <Grid item md={2} xl={2} lg={2}></Grid>
                         <Grid item xs={12} sm={12} md={12} xl={8} lg={8}>
                             <Grid container spacing={4}>
@@ -170,8 +228,7 @@ class Checkout extends Component {
                                     {/* 2nd block address */}
                                     { DeliveryForm }
                                     {/* 2nd end block address */}
-                                    {summary}
-                                    <Paper style={{ marginTop: '1.4rem' }}>
+                                    <Paper style={{ marginTop: '4.4rem' }}>
                                         <div className="checkout-step checkout-step--active">
                                             <h3 className="_1fM65H _2RMAtd"><span className="_1Tmvyj">4</span><span className="_1_m52b">Payment Options</span></h3>
                                             <ExpansionPanel>
@@ -270,8 +327,8 @@ class Checkout extends Component {
                                         <span className="summary_price_cart_details">Price details</span>
                                         <div className="_2twTWD">
                                             <div className="hJYgKM">
-                                                <div className="_10vVqD">Price ({this.props.cartProps.cart} item)</div>
-                                                <span> ₹{this.props.cartProps.cartPrice}</span>
+                                                <div className="_10vVqD">Price ({Data.cart.cart} item)</div>
+                                                <span> ₹{Data.cart.cartPrice}</span>
                                             </div>
                                             <div className="hJYgKM">
                                                 <div className="_10vVqD">Delivery Fee</div>
@@ -282,7 +339,7 @@ class Checkout extends Component {
                                                     <div className="_10vVqD">Total Amount</div>
                                                     <span>
                                                         <div className="tnAu1u">
-                                                            <span > ₹{this.props.cartProps.cartPrice}</span>
+                                                            <span > ₹{Data.cart.cartPrice}</span>
                                                         </div>
                                                     </span>
                                                 </div>

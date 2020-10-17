@@ -16,7 +16,6 @@ import "./dropdown.css"
 
 
 import './logout.css'
-const db = firebase.firestore()
 var nametook = ""
 
 class Header extends Component {

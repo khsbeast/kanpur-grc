@@ -15,10 +15,10 @@ const Kitchenitem = (props) => {
                 <Title title="Products"/>
                 <div className="tab-pane active text-style" id="tab1">
                     <div className=" con-w3l">
-                        <Product image="images/of.png" title="Moong" priceold="5" pricenew="2.5" id="moong"/>
-                        <Product image="images/of1.png" title="Sunflower" priceold="5" pricenew="2.5" id="sunflower"/>
-                        <Product image="images/of.png" title="Moong" priceold="5" pricenew="2.5" id="moong"/>
-                        <Product image="images/of3.png" title="Soya Chunks" priceold="5" pricenew="2.5" id="soyachunks"/>
+                        <Product image="images/of.png" name="Moong" priceold="5" pricenew="2.5" id="moong" category="a1"/>
+                        <Product image="images/of1.png" name="Sunflower" priceold="5" pricenew="2.5" id="sunflower" category="a1"/>
+                        <Product image="images/of.png" name="Moong" priceold="5" pricenew="2.5" id="moong" category="a1"/>
+                        <Product image="images/of3.png" name="Soya Chunks" priceold="5" pricenew="2.5" id="soyachunks" category="a1"/>
                         <div className="clearfix" />
                     </div>
                 </div>

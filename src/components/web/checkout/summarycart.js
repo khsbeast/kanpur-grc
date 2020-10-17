@@ -16,13 +16,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
                                     <div className="_3BTv9X" style={{ height: 94, width: 112 }}>
                                         <img className="_1Nyybr  _30XEf0" alt="rukim" src="/images/of1" />
                                     </div>
-                                    <div className="_3RkJty">
-                                        <div className="_3md1dr">
-                                            <button className="wNrY5O" disabled> – </button>
-                                            <div className="_2zH4zg"><input type="text" defaultValue={qty} className="_2csFM9" autoComplete="off" /></div
-                                            ><button className="wNrY5O"> + </button>
-                                        </div>
-                                    </div>
 
                                 </Grid>
                                 <Grid item xs={6} sm={6} md={6} xl={6} lg={6}>

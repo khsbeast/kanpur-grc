@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
 import './Product.css'
 import { addToCart } from '../../../../actions/productActions'
@@ -7,6 +7,17 @@ import { connect } from 'react-redux'
 
 const Product = (props) => {
     console.log(props)
+    const [qty,updatedqty] = useState(1);
+    console.log(qty)
+    const prod = {
+       [props.id]:{category: props.category,
+       name:props.name,
+       numbers:qty,
+       price:props.pricenew,
+       tagName:props.id
+       }
+    }
+    console.log(prod)
     return (
         <div className="col-md-3 m-wthree">
         <div className="col-m" >
@@ -27,12 +38,12 @@ const Product = (props) => {
                     <div className="clearfix" />
                 </div>
                 <div className="quantity-select">
-                <div className="entry value-minus">&nbsp;</div>
-                <div className="entry value"><span className="span-1">{1}</span></div>
-                <div className="entry value-plus active" >&nbsp;</div>
+                <div className="entry value-minus" onClick={qty>1?() => updatedqty(qty - 1):null}>&nbsp;</div>
+                <div className="entry value"><span className="span-1">{qty}</span></div>
+                <div className="entry value-plus active" onClick={() => updatedqty(qty + 1)}>&nbsp;</div>
                  </div>
                 <div className="add">
-                    <button className="btn btn-danger btn-outline-danger my-cart-btn my-cart-b buttn" onClick={() => props.addToCart(props.id)}>Add to Cart</button>
+                    <button className="btn btn-danger btn-outline-danger my-cart-btn my-cart-b buttn" onClick={() => props.addToCart(prod)}>Add to Cart</button>
                 </div>
             </div>
         </div>
