@@ -13,8 +13,6 @@ import { firestoreConnect } from "react-redux-firebase";
 import "./dropdown.css"
 
 
-
-
 import './logout.css'
 var nametook = ""
 

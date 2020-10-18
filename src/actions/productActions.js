@@ -4,12 +4,32 @@ export const addToCart = (prod) => {
     const firestore = getFirebase().firestore();
     const authorId = getState().firebase.auth.uid
     const state = getState().firestore;
-    console.log(state)
+    var cartno = 0
+    var cartsum = 0
+    var cartobj = state.ordered.Users[0].cart
+    cartobj = {
+      ...cartobj,
+      products:{
+        ...cartobj.products,
+        ...prod
+      }
+    }
+    Object.keys(cartobj.products).forEach((product) => {
+      if(cartobj.products[product].inCart){
+        cartno += 1;
+        cartsum += cartobj.products[product].price * cartobj.products[product].numbers;
+      }
+    })
+    cartobj={
+      ...cartobj,
+      cart:cartno,
+      cartPrice:cartsum
+    }
     firestore
       .collection("Users")
       .doc(authorId)
       .set({
-        ...prod,
+        cart:cartobj
       },
       {merge:true}
       )

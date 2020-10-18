@@ -11,6 +11,7 @@ const Product = (props) => {
     console.log(qty)
     const prod = {
        [props.id]:{category: props.category,
+       inCart:true,
        name:props.name,
        numbers:qty,
        price:props.pricenew,
