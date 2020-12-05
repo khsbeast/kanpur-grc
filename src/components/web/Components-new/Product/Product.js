@@ -20,8 +20,8 @@ const Product = (props) => {
     }
     console.log(prod)
     return (
-        <div className="col-md-3 m-wthree">
-        <div className="col-m" >
+        <div className="wrapper">
+        <div className="col-md-2 m-wthree">
         <div className="img-hover-zoom" >
             <Link to="/" data-toggle="modal" data-target="#myModal1" className="offer-img">
                <img src={props.image} className="img-responsive" alt={props.title} />

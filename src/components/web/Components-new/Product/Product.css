@@ -1,6 +1,11 @@
+
+
 .img-hover-zoom {
     height: 350px; /* [1.1] Set it as per your need */
     overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+    width: 200px;
+    border: 1px solid #B2B2B2;
+    padding: 1em;
   }
   .buttn{
     margin-top: 15px;
