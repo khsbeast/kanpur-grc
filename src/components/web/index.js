@@ -15,6 +15,7 @@ import Privacypolicy from './customer/privacy-policy';
 import Login from '../auth/login';
 import Register from '../auth/register';
 import Category from './category-mobile'
+import Pharma from '../web/Components-new/pharma/pharma'
 import Cart from './cart';
 import Checkout from './checkout';
 import Singleproduct from './singleproduct';
@@ -26,6 +27,7 @@ export default class Main extends Component {
             <Header />
             <Switch>
               <Route exact path='/' component={Home} />
+              <Route exact path='/pharma' component={Pharma} />
               {/* <Route path='/kitchen' component={Kitchen} /> */}
               <Route path='/kitchen/:iq' component={Kitchen} />
               <Route path="/product-details" component={Singleproduct} />

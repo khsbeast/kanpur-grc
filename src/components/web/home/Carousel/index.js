@@ -20,7 +20,7 @@ export default class Carousel extends Component {
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginTop: '9rem' }}>
                     <Slider {...settings}>
                         <div>
-                            <img src="images/super3.jpg" alt="supermarket"/>
+                            <img src="images/super23.jpg" alt="supermarket"/>
                         </div>
                         <div>
                             <img src="images/super2.jpg" alt="supermarket"/>

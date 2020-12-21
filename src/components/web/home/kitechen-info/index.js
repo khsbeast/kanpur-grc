@@ -7,6 +7,7 @@ import { addToCart } from '../../../../actions/productActions';
 import Title from '../../Components-new/Title/Title';
 import Product from '../../Components-new/Product/Product';
 import Notepad from "../../Components-new/Notepad/Notepad"
+import Rankprofile from "../../Components-new/Rankprofile/rankprofile"
 
 const Kitchenitem = (props) => {
     console.log(props);
@@ -18,12 +19,17 @@ const Kitchenitem = (props) => {
             </div>
             <div className="content-top">
                 <div className="container ">
+
                     <Title title="Products" />
                     <div className="tab-pane active text-style" id="tab1">
                         <div className=" con-w3l ">
                         <div className="mew2"><div className="slick-slider slick-initialized slider-bk" dir="ltr">
+                            <div style={{display:"flex"}}>
                             <Sliderproduct state={props} />
+                            <div style={{marginLeft:"11vh"}}>
                             <Notepad/>
+                            </div>
+                            </div>
                             <div className="clearfix" />
                         </div>
                 </div>
@@ -82,7 +88,16 @@ const Kitchenitem = (props) => {
                         </div>
                     </div>
                     {/*content*/}
+                    <div>
+                        <Title title="Ranking" />
+                        <div style={{display:"flex",justifyContent:"space-around",marginBottom:"20px"}}>
+                        <Rankprofile />
+                        <Rankprofile />
+                        <Rankprofile />
+                        <Rankprofile />
 
+                        </div>
+                    </div>
                     {/* another slider  */}
                     <div className="tab-pane active text-style" id="tab1" style={{ paddingBottom: '3rem' }}>
                         <Title title="Bestsellers" />
@@ -92,7 +107,6 @@ const Kitchenitem = (props) => {
                         </div>
                     </div>
                     {/* End slider */}
-
                 </div>
             </div>
         </div>
