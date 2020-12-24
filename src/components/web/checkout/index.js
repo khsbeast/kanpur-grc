@@ -34,18 +34,10 @@ class Checkout extends Component {
             [e.target.id]: e.target.value,
         });
         add = {
-            name: this.props.data[0].name,
-            number: this.props.data[0].number,
-            pincode: this.props.data[0].pincode,
-            address: this.props.data[0].address,
-            city: this.props.data[0].city,
-            state: this.props.data[0].state,
-            addressfound: true,
-        }
-        add = {
             ...add,
             [e.target.id]: e.target.value,
         }
+        console.log(add)
     };
     handleEdit = () => {
         this.setState({ edit: true })
@@ -54,7 +46,9 @@ class Checkout extends Component {
         e.preventDefault();
         // alert(store.getState().firebase.auth.uid);
         this.setState({ edit: false })
+        const len = Object.keys(add).length;
         console.log(add);
+        console.log(len);
         this.props.details(add)
         /*const upload = dbRefrence
             .collection("Users")
@@ -76,6 +70,8 @@ class Checkout extends Component {
         console.log(this.props)
         const summary = <Summarycart title="Moong" price="10" qty="2" />
         if (this.props.data && this.props.uid) {
+            console.log("11",this.props.uid);
+            console.log("12",this.props.data);
             const Data = this.props.data[0];
             if (Data.addressfound) {
                 var DeliveryForm = <Paper >
@@ -103,7 +99,7 @@ class Checkout extends Component {
                     <h3 className="_1fM65H _2RMAtd"><span className="_1Tmvyj">2</span><span className="_1_m52b">Delivery Address</span></h3>
                     <Grid container spacing={4} className="address_bk_checkout ">
                         <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
-                            <input type="text" className="login-phone__input input" id="name" placeholder="Name" onChange={this.handleChange} />
+                            <input type="text" className="login-phone__input input" id="name" placeholder="Name" value={this.state.name} onChange={this.handleChange} />
                         </Grid>
                         <Grid className="address_field_bk" item xs={12} sm={12} md={12} xl={6} lg={6}>
                             <input type="Number" className="address_field_bk__input input" id="number" placeholder="Number" onChange={this.handleChange} />

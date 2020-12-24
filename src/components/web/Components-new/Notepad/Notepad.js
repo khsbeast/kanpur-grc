@@ -29,7 +29,7 @@ const Notepad = () => {
                     <h3 className="heading2" style={{ color: "#fff" }}>Notepad</h3>
                 </div>
                 <div style={{ display: "flex" }}>
-                    <input className="input" placeholder="Enter Items and Quantity" onChange={changehandler} type="text" />
+                    <input className="input1" placeholder="Enter Items and Quantity" onChange={changehandler} type="text" />
                     <button className="roundbtn" onClick={submithandler}>+</button>
                 </div>
                 <div style={{display:"flex",justifyContent:"space-around",marginTop:"16px",marginRight:"22px",marginBottom:"20px"}}>

@@ -106,7 +106,8 @@ export const details = (name) => {
       .collection("Users")
       .doc(authorId)
       .set({
-        ...name
+        ...name,
+        addressfound: true
       },
       {merge:true}
       )
