@@ -48,7 +48,6 @@ class Checkout extends Component {
         this.setState({ edit: false })
         const len = Object.keys(add).length;
         console.log(add);
-        console.log(len);
         this.props.details(add)
         /*const upload = dbRefrence
             .collection("Users")
