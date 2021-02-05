@@ -94,6 +94,32 @@ export const clearProduct = (name) => {
   };
 };
 
+export const notepad = (cart) => {
+  return(dispatch,getState,{getFirebase}) => {
+    const firestore = getFirebase().firestore();
+    const authorId = getState().firebase.auth.uid
+    const state = getState().firestore;
+    firestore.collection("Users").doc(authorId).update({"notepad":{}})
+    firestore
+    .collection("Users")
+    .doc(authorId)
+    .set({
+      ...cart
+    },
+    {merge:true}
+    ).then(() => {
+      dispatch({
+        type: CLEAR_PRODUCT,
+        payload: cart
+      })
+    })
+    .catch((err) => {
+      dispatch({
+        
+      });
+    });
+  }
+}
 
 export const details = (name) => {
   console.log(name)

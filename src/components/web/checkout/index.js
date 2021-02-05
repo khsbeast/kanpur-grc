@@ -27,7 +27,8 @@ class Checkout extends Component {
         city: "",
         state: "",
         addressfound: false,
-        edit: false
+        edit: false,
+        warn : false
     }
     handleChange = (e) => {
         this.setState({
@@ -38,6 +39,7 @@ class Checkout extends Component {
             [e.target.id]: e.target.value,
         }
         console.log(add)
+        console.log(this.state)
     };
     handleEdit = () => {
         this.setState({ edit: true })
@@ -47,8 +49,45 @@ class Checkout extends Component {
         // alert(store.getState().firebase.auth.uid);
         this.setState({ edit: false })
         const len = Object.keys(add).length;
-        console.log(add);
+        console.log(len)
+        if(len === 6){
         this.props.details(add)
+        this.setState({warn:false})
+        }
+        else
+        this.setState({warn:true})
+        /*const upload = dbRefrence
+            .collection("Users")
+            .doc(store.getState().firebase.auth.uid);
+        upload.set(
+            {
+                name: this.state.name,
+                number: this.state.number,
+                pincode: this.state.pincode,
+                address: this.state.address,
+                city: this.state.city,
+                state: this.state.state,
+                addressfound: true,
+            },
+            { merge: true });*/
+    }
+    handleSubmit2 = (e) => {
+        e.preventDefault();
+        // alert(store.getState().firebase.auth.uid);
+        console.log("yes")
+        let imp = true;
+        Object.keys(add).forEach(prop => {
+            if(add[prop] === "")
+            {
+                imp = false
+                this.setState({warn:true})
+            }
+        })
+        if(imp)
+        {
+        this.props.details(add)
+        this.setState({warn:false,edit : false})
+        }
         /*const upload = dbRefrence
             .collection("Users")
             .doc(store.getState().firebase.auth.uid);
@@ -135,7 +174,8 @@ class Checkout extends Component {
                         </div>
                     </div>
                 </div> */}
-
+                    
+                {this.state.warn  ? <div className="warn">*Please fill all input fields</div> : null}
                             <div class="_1qbqu2 uK6xOa">
                                 <button class="_2AkmmA EqjTfe _7UHT_c" type="button" onClick={this.handleSubmit}>Deliver Here</button>
                                 <button class="_2AkmmA _237M5J" type="button" >Cancel</button>
@@ -186,9 +226,9 @@ class Checkout extends Component {
                     </div>
                 </div>
             </div> */}
-
+                            {this.state.warn  ? <div className="warn">*Please fill all input fields</div> : null}
                             <div class="_1qbqu2 uK6xOa">
-                                <button class="_2AkmmA EqjTfe _7UHT_c" type="button" onClick={this.handleSubmit}>Submit</button>
+                                <button class="_2AkmmA EqjTfe _7UHT_c" type="button" onClick={this.handleSubmit2}>Submit</button>
                             </div>
                         </Grid>
                     </Grid>
